@@ -606,11 +606,11 @@ public class QuerydslBasicTest {
     private List<Member> searchMember(String userNameParam, Integer ageParam) {
         BooleanBuilder builder = new BooleanBuilder();
 
-        if(userNameParam != null) {
+        if (userNameParam != null) {
             builder.and(member.userName.eq(userNameParam));
         }
 
-        if(ageParam != null) {
+        if (ageParam != null) {
             builder.and(member.age.eq(ageParam));
         }
 
@@ -679,6 +679,34 @@ public class QuerydslBasicTest {
     }
 
 
+    @Test
+    public void sqlFunction() {
+        List<String> result = queryFactory
+                .select(
+                        Expressions.stringTemplate("function('replace', {0}, {1}, {2})",
+                                member.userName, "member", "M")
+                ).from(member)
+                .fetch();
+
+        for (String s : result) {
+            System.out.println(s);
+        }
+    }
+
+    @Test
+    public void sqlFunction2() {
+        List<String> result = queryFactory
+                .select(member.userName)
+                .from(member)
+                .where(member.userName.eq(
+//                        Expressions.stringTemplate("function('lower', {0})", member.userName))
+                                member.userName.lower()))
+                .fetch();
+
+        for (String s : result) {
+            System.out.println(s);
+        }
+    }
 
 }
 
