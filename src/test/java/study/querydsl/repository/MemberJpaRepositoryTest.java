@@ -15,10 +15,6 @@ import java.util.List;
 @SpringBootTest
 @Transactional
 class MemberJpaRepositoryTest {
-
-    @Autowired
-    EntityManager em;
-
     @Autowired
     MemberJpaRepository memberJpaRepository;
 
